@@ -258,8 +258,14 @@ export class Client {
 
       // Do the upload
       const response = await storageBucket.upload(source, uploadOpts);
-      const name = response[0].name;
-      return name;
+      const signedUrlResponse = await response[0].getSignedUrl({
+        version: 'v4',
+        action: 'read',
+        // 7 days from now - maximum
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+      });
+
+      return signedUrlResponse[0];
     });
 
     const results = await inParallel(tasks, opts.concurrency);

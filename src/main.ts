@@ -191,7 +191,7 @@ export async function run(): Promise<void> {
     });
     core.endGroup();
 
-    core.setOutput('uploaded', uploadResponses.join(','));
+    core.setOutput('uploaded', uploadResponses[0]);
   } catch (err) {
     const msg = errorMessage(err);
     core.setFailed(`google-github-actions/upload-cloud-storage failed with: ${msg}`);
